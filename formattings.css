@@ -14,20 +14,20 @@ th { /*The table headings have padding*/
 #addBtn:hover {
   background-color: darkgreen;
 }
-#updateBtn {
+.updateBtn {
   background-color: blue;
   color: white;
   cursor: pointer;
 }
-#updateBtn:hover {
+.updateBtn:hover {
   background-color: darkblue;
 }
-#deleteBtn {
+.deleteBtn {
   background-color: red;
   color: white;
   cursor: pointer;
 }
-#deleteBtn:hover {
+.deleteBtn:hover {
   background-color: darkred;
 }
 

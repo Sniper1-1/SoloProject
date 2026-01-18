@@ -1,7 +1,5 @@
 /*Button handling*/
 const addBtn = document.getElementById("addBtn");
-const updateBtn = document.getElementById("updateBtn");
-const deleteBtn = document.getElementById("deleteBtn");
 
 addBtn.addEventListener("click", function() {
     // Code to add a new assignment
@@ -9,23 +7,54 @@ addBtn.addEventListener("click", function() {
     form.style.display = "block";
 });
 
-updateBtn.addEventListener("click", function() {
-    // Code to update an existing assignment
-    console.log("Update button clicked");
-});
-deleteBtn.addEventListener("click", function() {
-    // Code to delete an assignment
-    console.log("Delete button clicked");
-});
-
 /*Data handling*/
 let assignments = [];
-let nextId=0;
+let id=0;
+let editIndex = null;
 const tableBody = document.getElementById("assignments");
 
 
-function addAssignment(newAssignment) {
-    assignments.push(newAssignment);
+
+/*Form handling*/
+const form = document.getElementById("assignmentForm");
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const course = document.getElementById("course").value;
+    const assignmentName = document.getElementById("assignmentName").value;
+    const dueDate = document.getElementById("dueDate").value;
+    const status = document.getElementById("status").value;
+
+    if(editIndex==null){
+        const newAssignment = {
+        id: id,
+        course: course,
+        name: assignmentName,
+        dueDate: dueDate,
+        status: status
+        };
+        assignments.push(newAssignment);
+        id++; // Increment ID for next assignment
+        console.log("Added a new assignment: ", newAssignment);
+    }
+    else{ //editing existing assignment
+        const currentId=assignments[editIndex].id;
+        assignments[editIndex]={
+            id: currentId,
+            course: course,
+            name: assignmentName,
+            dueDate: dueDate,
+            status: status
+        };
+        editIndex=null;
+    }
+
+    renderTable();
+    form.reset();
+    form.style.display = "none";
+});
+
+/*Render table*/
+function renderTable() {
     tableBody.innerHTML = ""; // clear table so that rows are not duplicated on subsequent adds
 
     assignments.forEach(assignment => {
@@ -37,31 +66,43 @@ function addAssignment(newAssignment) {
             <td>${assignment.name}</td>
             <td>${assignment.dueDate}</td>
             <td>${assignment.status}</td>
+            <td>
+                <button class="updateBtn" data-id="${assignment.id}">Edit</button>
+                <button class="deleteBtn" data-id="${assignment.id}">Delete</button>
+            </td>
         `;
 
         tableBody.appendChild(row);
     });
-
-    console.log("Assignment added:", newAssignment);
+    
+    attachButtonHandlers();
 }
 
-const form = document.getElementById("assignmentForm");
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    const course = document.getElementById("course").value;
-    const assignmentName = document.getElementById("assignmentName").value;
-    const dueDate = document.getElementById("dueDate").value;
-    const status = document.getElementById("status").value;
+function attachButtonHandlers() {
+    const editButtons = document.querySelectorAll(".editBtn");
+    const deleteButtons = document.querySelectorAll(".deleteBtn");
 
-    const newAssignment = {
-        id: nextId++,
-        course: course,
-        name: assignmentName,
-        dueDate: dueDate,
-        status: status
-    };
-    addAssignment(newAssignment);
-
-    form.reset();
-    form.style.display = "none";
-});
+    editButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const id = Number(this.dataset.id);
+            const index = assignments.findIndex(a => a.id === id);
+            document.getElementById("course").value = assignments[index].course;
+            document.getElementById("assignmentName").value = assignments[index].name;
+            document.getElementById("dueDate").value = assignments[index].dueDate;
+            document.getElementById("status").value = assignments[index].status;
+            editIndex = assignments.findIndex(a => a.id === id);
+            form.style.display = "block";
+        });
+    });
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const id = Number(this.dataset.id);
+            const index = assignments.findIndex(a => a.id === id);
+            if(confirm("Are you sure you want to delete this assignment?")) {                
+                console.log("Deleted assignment: ", assignments[index]);
+                assignments.splice(index, 1);
+                renderTable();
+            }
+        });
+    });
+}

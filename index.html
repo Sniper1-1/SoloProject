@@ -11,8 +11,6 @@
     <h1>Course Assignments List</h1>
 
     <button id="addBtn" type="button">Add New Assignment</button>
-    <button id="updateBtn" type="button">Update Assignment</button>
-    <button id="deleteBtn" type="button">Delete Assignment</button>
 
     <table>
         <tr> <!-- Table Headers -->
@@ -21,6 +19,7 @@
             <th>Assignment Name</th>
             <th>Due Date</th>
             <th>Status</th>
+            <th>Actions</th> <!-- For Edit/Delete buttons -->
         </tr>
         <tbody id="assignments">
             <!-- Table rows will be dynamically added here -->
@@ -36,7 +35,7 @@
         <input type="text" id="assignmentName" name="assignmentName" required>
 
         <label for="dueDate">Due Date:</label>
-        <input type="date" id="dueDate" name="dueDate" required>
+        <input type="date" id="dueDate" name="dueDate">
 
         <label for="status">Status:</label>
         <select id="status" name="status" required>
