@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Project</title>
+    <link rel="stylesheet" href="formattings.css">
+</head>
+<body>
+    <!-- Your visible content goes here -->
+    <h1>Course Assignments List</h1>
+
+    <button id="addBtn" type="button">Add New Assignment</button>
+    <button id="updateBtn" type="button">Update Assignment</button>
+    <button id="deleteBtn" type="button">Delete Assignment</button>
+
+    <table>
+        <tr> <!-- Table Headers -->
+            <th>ID Number</th>
+            <th>Course</th>
+            <th>Assignment Name</th>
+            <th>Due Date</th>
+            <th>Status</th>
+        </tr>
+        <tbody id="assignments">
+            <!-- Table rows will be dynamically added here -->
+        </tbody>
+    </table>
+    
+    <!-- Form for adding new assignments -->
+    <form id="assignmentForm">
+        <label for="course">Course:</label>
+        <input type="text" id="course" name="course" required>
+
+        <label for="assignmentName">Assignment Name:</label>
+        <input type="text" id="assignmentName" name="assignmentName" required>
+
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate" required>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+    
+    <script src="code.js"></script>
+</body>
+</html>
