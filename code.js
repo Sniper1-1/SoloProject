@@ -130,3 +130,41 @@ function saveAssignments() {
     localStorage.setItem("assignments", JSON.stringify(assignments));
     localStorage.setItem("idCounter", id);
 }
+
+/*Toggle view between assignments and statistics*/
+const viewToggle = document.getElementById("viewToggle");
+const assignmentsTable = document.getElementById("assignmentsTable");
+const statisticsDiv = document.getElementById("statistics");
+viewToggle.addEventListener("change", function() {
+    if (this.checked) {
+        // Show statistics view
+        console.log("Switched to statistics view");
+        addBtn.style.display = "none";
+        assignmentsTable.style.display = "none";
+        statisticsDiv.style.display = "block";
+        purgeBtn.style.display = "none";
+        addTestEntriesBtn.style.display = "none";
+
+        renderStatistics();
+
+    } else {
+        // Show assignments view
+        console.log("Switched to assignments view");
+        addBtn.style.display = "inline-block";
+        assignmentsTable.style.display = "table";
+        statisticsDiv.style.display = "none";
+        purgeBtn.style.display = "inline-block";
+        addTestEntriesBtn.style.display = "inline-block";
+        
+    }
+});
+function renderStatistics() {
+    const totalAssignments = assignments.length;
+    const completedAssignments = assignments.filter(a => a.status === "Completed").length;
+    const inProgressAssignments = assignments.filter(a => a.status === "In Progress").length;
+    const notStartedAssignments = assignments.filter(a => a.status === "Not Started").length;
+    document.getElementById("totalAssignments").textContent = `Total Assignments: ${totalAssignments}`;
+    document.getElementById("completedAssignments").textContent = `Completed Assignments: ${completedAssignments}`;
+    document.getElementById("inProgressAssignments").textContent = `In Progress Assignments: ${inProgressAssignments}`;
+    document.getElementById("notStartedAssignments").textContent = `Not Started Assignments: ${notStartedAssignments}`;
+}

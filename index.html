@@ -11,15 +11,17 @@
     <!-- Your visible content goes here -->
     <h1>Course Assignments List</h1>
 
-    <button id="addBtn" type="button">Add New Assignment</button>
-
+    <!-- Toggle switch for viewing assignments vs statistics -->
     <div class="toggle-container">
+        <span class="toggle-label left">View Assignments</span>
+
         <input type="checkbox" id="viewToggle">
         <label for="viewToggle" class="toggle"></label>
-        <span>View Statistics</span>
+
+        <span class="toggle-label right">View Statistics</span>
     </div>
 
-    <table>
+    <table id="assignmentsTable">
         <tr> <!-- Table Headers -->
             <th>ID Number</th>
             <th>Course</th>
@@ -58,6 +60,17 @@
                 </div>
             </form>
         </div>
+    </div>
+
+    <button id="addBtn" type="button">Add New Assignment</button>
+
+    <!-- The statistics for when statistic view is active -->
+    <div id="statistics" style="display:none;">
+        <h2>Assignment Statistics</h2>
+        <p id="totalAssignments">Total Assignments: 0</p>
+        <p id="completedAssignments">Completed Assignments: 0</p>
+        <p id="inProgressAssignments">In Progress Assignments: 0</p>
+        <p id="notStartedAssignments">Not Started Assignments: 0</p>
     </div>
 
     <button id="purgeBtn" type="button">⚠️Purge⚠️</button>
