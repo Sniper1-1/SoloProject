@@ -4,7 +4,7 @@ const addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", function() {
     // Code to add a new assignment
     console.log("Add button clicked");
-    form.style.display = "block";
+    document.getElementById("modalOverlay").style.display = "flex";
 });
 
 /*Data handling and initialization*/
@@ -59,8 +59,15 @@ form.addEventListener("submit", function(event) {
 
     renderTable();
     form.reset();
-    form.style.display = "none";
+    document.getElementById("modalOverlay").style.display = "none";
     saveAssignments();
+});
+
+const modalOverlay = document.getElementById("modalOverlay");
+modalOverlay.addEventListener("click", e => {
+    if (e.target === modalOverlay) {
+        modalOverlay.style.display = "none";
+    }
 });
 
 /*Render table*/
@@ -101,7 +108,7 @@ function attachButtonHandlers() {
             document.getElementById("dueDate").value = assignments[index].dueDate;
             document.getElementById("status").value = assignments[index].status;
             editIndex = assignments.findIndex(a => a.id === id);
-            form.style.display = "block";
+            document.getElementById("modalOverlay").style.display = "flex";
         });
     });
     deleteButtons.forEach(button => {

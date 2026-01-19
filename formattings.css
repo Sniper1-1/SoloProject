@@ -1,3 +1,4 @@
+/* Table styles ------------------------------------------------------ */
 table, th, td { /*The table has a border, as does the cells*/
   border:1px solid black;
 }
@@ -5,7 +6,7 @@ th { /*The table headings have padding*/
   padding: 10px;
 }
 
-/* Button styles */
+/* Button styles ------------------------------------------------------ */
 #addBtn {
   background-color: green;
   color: white;
@@ -31,7 +32,74 @@ th { /*The table headings have padding*/
   background-color: darkred;
 }
 
-/* Form styles */
-#assignmentForm {
+/* Toggle styles ------------------------------------------------------ */
+.toggle-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/*Hide the checkbox*/
+#viewToggle {
     display: none;
+}
+/*Switch the background of the toggle*/
+.toggle {
+    width: 50px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+}
+/*The circle inside the toggle*/
+.toggle::after {
+    content: "";
+    width: 21px;
+    height: 21px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+}
+/*When On*/
+#viewToggle:checked + .toggle {
+    background-color: #4CAF50;
+}
+/*Move cirlce*/
+#viewToggle:checked + .toggle::after {
+    transform: translateX(25px);
+}
+
+/* Form styles ------------------------------------------------------ */
+
+/* Modal overlay */
+#modalOverlay {
+    display: none;                /* hidden by default */
+    position: fixed;
+    inset: 0;                     /* top, right, bottom, left = 0 */
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal box */
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Modal buttons */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
 }

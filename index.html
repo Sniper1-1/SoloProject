@@ -13,6 +13,12 @@
 
     <button id="addBtn" type="button">Add New Assignment</button>
 
+    <div class="toggle-container">
+        <input type="checkbox" id="viewToggle">
+        <label for="viewToggle" class="toggle"></label>
+        <span>View Statistics</span>
+    </div>
+
     <table>
         <tr> <!-- Table Headers -->
             <th>ID Number</th>
@@ -28,25 +34,31 @@
     </table>
     
     <!-- Form for adding new assignments -->
-    <form id="assignmentForm">
-        <label for="course">Course:</label>
-        <input type="text" id="course" name="course" required>
+     <div id="modalOverlay">
+        <div class="modal">
+            <form id="assignmentForm">
+                <label for="course">Course:</label>
+                <input type="text" id="course" name="course" required>
 
-        <label for="assignmentName">Assignment Name:</label>
-        <input type="text" id="assignmentName" name="assignmentName" required>
+                <label for="assignmentName">Assignment Name:</label>
+                <input type="text" id="assignmentName" name="assignmentName" required>
 
-        <label for="dueDate">Due Date:</label>
-        <input type="date" id="dueDate" name="dueDate">
+                <label for="dueDate">Due Date:</label>
+                <input type="date" id="dueDate" name="dueDate">
 
-        <label for="status">Status:</label>
-        <select id="status" name="status" required>
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-        </select>
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
 
-        <button type="submit">Submit</button>
-    </form>
+                <div class="modal-actions">
+                    <button type="submit">submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <button id="purgeBtn" type="button">⚠️Purge⚠️</button>
     <button id="addTestEntriesBtn" type="button">Add Test Entries</button>
