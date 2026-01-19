@@ -135,6 +135,7 @@ function saveAssignments() {
 const viewToggle = document.getElementById("viewToggle");
 const assignmentsTable = document.getElementById("assignmentsTable");
 const statisticsDiv = document.getElementById("statistics");
+const pageHeader = document.getElementById("pageHeader");
 viewToggle.addEventListener("change", function() {
     if (this.checked) {
         // Show statistics view
@@ -144,9 +145,9 @@ viewToggle.addEventListener("change", function() {
         statisticsDiv.style.display = "block";
         purgeBtn.style.display = "none";
         addTestEntriesBtn.style.display = "none";
+        pageHeader.textContent = "Assignment Statistics";
 
         renderStatistics();
-
     } else {
         // Show assignments view
         console.log("Switched to assignments view");
@@ -155,7 +156,7 @@ viewToggle.addEventListener("change", function() {
         statisticsDiv.style.display = "none";
         purgeBtn.style.display = "inline-block";
         addTestEntriesBtn.style.display = "inline-block";
-        
+        pageHeader.textContent = "Course Assignments List";
     }
 });
 function renderStatistics() {

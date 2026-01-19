@@ -1,9 +1,26 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: rgb(55, 143, 221);
+}
+
 /* Table styles ------------------------------------------------------ */
 table, th, td { /*The table has a border, as does the cells*/
   border:1px solid black;
 }
 th { /*The table headings have padding*/
   padding: 10px;
+  background-color: white;
+}
+#assignments tr:nth-child(even) {
+    background-color: #c9c9c9;
+}
+
+#assignments tr:nth-child(odd) {
+    background-color: white;
+}
+#assignments tr:hover {
+    background-color: #dbeafe;
 }
 
 /* Button styles ------------------------------------------------------ */
