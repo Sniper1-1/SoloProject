@@ -7,13 +7,22 @@ addBtn.addEventListener("click", function() {
     form.style.display = "block";
 });
 
-/*Data handling*/
+/*Data handling and initialization*/
 let assignments = [];
 let id=0;
 let editIndex = null;
 const tableBody = document.getElementById("assignments");
+// Load assignments from localStorage if available
+const savedAssignments = localStorage.getItem("assignments");
+const savedIdCounter = localStorage.getItem("idCounter");
 
-
+if (savedAssignments) {
+    assignments = JSON.parse(savedAssignments);
+}
+if (savedIdCounter) {
+    id = parseInt(savedIdCounter);
+}
+renderTable();
 
 /*Form handling*/
 const form = document.getElementById("assignmentForm");
@@ -51,6 +60,7 @@ form.addEventListener("submit", function(event) {
     renderTable();
     form.reset();
     form.style.display = "none";
+    saveAssignments();
 });
 
 /*Render table*/
@@ -77,12 +87,12 @@ function renderTable() {
     
     attachButtonHandlers();
 }
-
+/*Attach button handlers for edit and delete buttons*/
 function attachButtonHandlers() {
-    const editButtons = document.querySelectorAll(".editBtn");
+    const updateButtons = document.querySelectorAll(".updateBtn");
     const deleteButtons = document.querySelectorAll(".deleteBtn");
 
-    editButtons.forEach(button => {
+    updateButtons.forEach(button => {
         button.addEventListener("click", function() {
             const id = Number(this.dataset.id);
             const index = assignments.findIndex(a => a.id === id);
@@ -102,7 +112,14 @@ function attachButtonHandlers() {
                 console.log("Deleted assignment: ", assignments[index]);
                 assignments.splice(index, 1);
                 renderTable();
+                saveAssignments();
             }
         });
     });
+}
+
+/*Saving*/
+function saveAssignments() {
+    localStorage.setItem("assignments", JSON.stringify(assignments));
+    localStorage.setItem("idCounter", id);
 }
