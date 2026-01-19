@@ -1,2 +1,2 @@
-Folder name: SoloProject
+Folder name: SoloProject <br>
 URL: http://localhost/SoloProject/
