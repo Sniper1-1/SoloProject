@@ -41,3 +41,10 @@ function fillTestData() {
     renderTable();
     saveAssignments();
 }
+
+//-----------------------------------------------------------------------
+// Automatically fill test data if no assignments exist for demo purposes
+//-----------------------------------------------------------------------
+if(assignments.length<=0){
+    fillTestData();
+}
