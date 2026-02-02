@@ -1,5 +1,10 @@
 const API_BASE = "http://localhost/SoloProject/backend/api.php";
 
+/* Paging */
+let currentPage = 1;
+const pageSize = 10;
+let totalRecords = 0;
+
 /* Button handling */
 const addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", () => {
@@ -9,24 +14,24 @@ addBtn.addEventListener("click", () => {
 /* Data */
 let assignments = [];
 let editId = null;
-let isInitialLoad = true; // Flag to check if it's the initial page load
 
 const tableBody = document.getElementById("assignments");
 
 /* INITIAL LOAD */
-document.addEventListener("DOMContentLoaded", loadAssignments);
+document.addEventListener("DOMContentLoaded", () => loadAssignments(currentPage));
 
-async function loadAssignments() {
+async function loadAssignments(page = 1) {
     try {
-        const res = await fetch(API_BASE);
-        assignments = await res.json();
+        const res = await fetch(`${API_BASE}?page=${page}&limit=${pageSize}`);
+        const result = await res.json();
+
+        assignments = result.data;
+        totalRecords = result.total;
+        currentPage = result.page;
+
         renderTable();
-        
-        // Auto-fill with test data only on initial page load if empty
-        if (isInitialLoad && assignments.length === 0) {
-            fillTestData();
-        }
-        isInitialLoad = false;
+        renderPagingControls();
+
     } catch (err) {
         console.error("Failed to load assignments", err);
     }
@@ -38,8 +43,8 @@ form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const payload = {
-        course: document.getElementById("course").value,
-        name: document.getElementById("assignmentName").value,
+        course: document.getElementById("course").value.trim(),
+        name: document.getElementById("assignmentName").value.trim(),
         dueDate: document.getElementById("dueDate").value,
         status: document.getElementById("status").value
     };
@@ -52,6 +57,10 @@ form.addEventListener("submit", async function (event) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
+            const newTotal = totalRecords + 1;
+            const lastPage = Math.ceil(newTotal / pageSize);
+            await loadAssignments(lastPage);
+
         } else {
             // UPDATE
             await fetch(`${API_BASE}/${editId}`, {
@@ -60,9 +69,9 @@ form.addEventListener("submit", async function (event) {
                 body: JSON.stringify(payload)
             });
             editId = null;
+            await loadAssignments(currentPage);
         }
-
-        await loadAssignments();
+        //clear and close the popup for entering an entry
         form.reset();
         modalOverlay.style.display = "none";
 
@@ -109,7 +118,7 @@ function attachButtonHandlers() {
     document.querySelectorAll(".updateBtn").forEach(btn => {
         btn.addEventListener("click", () => {
             const id = btn.dataset.id;
-            const assignment = assignments.find(x => x.id == id);
+            const assignment = assignments.find(a => a.id == id);
 
             course.value = assignment.course;
             assignmentName.value = assignment.name;
@@ -125,15 +134,44 @@ function attachButtonHandlers() {
     document.querySelectorAll(".deleteBtn").forEach(btn => {
         btn.addEventListener("click", async () => {
             const id = btn.dataset.id;
-            if (confirm("Delete this assignment?")){
+            if (confirm("Delete this assignment?")) {
                 try {
                     await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
-                    await loadAssignments();
+
+                    // If page becomes empty, move back one page
+                    if (assignments.length === 1 && currentPage > 1) {
+                        currentPage--;
+                    }
+
+                    await loadAssignments(currentPage);
                 } catch (err) {
                     console.error("Delete failed", err);
                 }
-            }           
+            }
         });
+    });
+}
+
+/* Paging controls */
+const pagingDiv = document.getElementById("paging");
+function renderPagingControls() {
+    if (!pagingDiv) return;
+
+    const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
+
+
+    pagingDiv.innerHTML = `
+        <button ${currentPage === 1 ? "disabled" : ""} id="prevPage">Previous</button>
+        <span>Page ${currentPage} of ${totalPages}</span>
+        <button ${currentPage === totalPages ? "disabled" : ""} id="nextPage">Next</button>
+    `;
+
+    document.getElementById("prevPage")?.addEventListener("click", () => {
+        loadAssignments(currentPage - 1);
+    });
+
+    document.getElementById("nextPage")?.addEventListener("click", () => {
+        loadAssignments(currentPage + 1);
     });
 }
 
@@ -142,16 +180,21 @@ const viewToggle = document.getElementById("viewToggle");
 viewToggle.addEventListener("change", () => {
     const statsDiv = document.getElementById("statistics");
     const tableDiv = document.getElementById("assignmentsTable");
-    
+
     if (viewToggle.checked) {
         tableDiv.style.display = "none";
+        addBtn.style.display = "none";
+        pagingDiv.style.display = "none";
         statsDiv.style.display = "block";
         renderStatistics();
     } else {
         statsDiv.style.display = "none";
+        addBtn.style.display = "inline-block";
+        pagingDiv.style.display = "block";
         tableDiv.style.display = "table";
     }
 });
+
 
 function renderStatistics() {
     document.getElementById("totalAssignments").textContent =

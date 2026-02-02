@@ -29,7 +29,23 @@ $assignmentId = is_numeric($id) ? (int)$id : null;
 
 if ($method === 'GET') {
     // GET /assignments
-    echo json_encode(loadData());
+    $data = loadData();
+
+    // Paging parameters
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
+
+    $total = count($data);
+    $start = ($page - 1) * $limit;
+
+    $pagedData = array_slice($data, $start, $limit);
+
+    echo json_encode([
+        'data' => $pagedData,
+        'total' => $total,
+        'page' => $page,
+        'limit' => $limit
+    ]);
 } 
 elseif ($method === 'POST') {
     // POST /assignments
