@@ -3,7 +3,7 @@ const purgeBtn = document.getElementById("purgeBtn");
 purgeBtn.addEventListener("click", async function() {
     if (confirm("Are you sure you want to purge all saved assignments and reset the saved table? This action cannot be undone.")) {
         // Delete all assignments from the API
-        for (let assignment of assignments) {
+        for (let assignment of currentPageAssignments) {
             await fetch(`${API_BASE}/${assignment.id}`, { method: "DELETE" });
         }
         await loadAssignments();

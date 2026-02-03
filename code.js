@@ -12,7 +12,8 @@ addBtn.addEventListener("click", () => {
 });
 
 /* Data */
-let assignments = [];
+let currentPageAssignments = [];
+let allAssignments = [];
 let editId = null;
 
 const tableBody = document.getElementById("assignments");
@@ -25,7 +26,7 @@ async function loadAssignments(page = 1) {
         const res = await fetch(`${API_BASE}?page=${page}&limit=${pageSize}`);
         const result = await res.json();
 
-        assignments = result.data;
+        currentPageAssignments = result.data;
         totalRecords = result.total;
         currentPage = result.page;
 
@@ -93,7 +94,7 @@ modalOverlay.addEventListener("click", e => {
 function renderTable() {
     tableBody.innerHTML = "";
 
-    assignments.forEach(assignment => {
+    currentPageAssignments.forEach(assignment => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${assignment.id}</td>
@@ -118,7 +119,7 @@ function attachButtonHandlers() {
     document.querySelectorAll(".updateBtn").forEach(btn => {
         btn.addEventListener("click", () => {
             const id = btn.dataset.id;
-            const assignment = assignments.find(a => a.id == id);
+            const assignment = currentPageAssignments.find(a => a.id == id);
 
             course.value = assignment.course;
             assignmentName.value = assignment.name;
@@ -139,7 +140,7 @@ function attachButtonHandlers() {
                     await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
 
                     // If page becomes empty, move back one page
-                    if (assignments.length === 1 && currentPage > 1) {
+                    if (currentPageAssignments.length === 1 && currentPage > 1) {
                         currentPage--;
                     }
 
@@ -198,14 +199,14 @@ viewToggle.addEventListener("change", () => {
 
 function renderStatistics() {
     document.getElementById("totalAssignments").textContent =
-        `Total Assignments: ${assignments.length}`;
+        `Total Assignments: ${currentPageAssignments.length}`;
 
     document.getElementById("completedAssignments").textContent =
-        `Completed Assignments: ${assignments.filter(a => a.status === "Completed").length}`;
+        `Completed Assignments: ${currentPageAssignments.filter(a => a.status === "Completed").length}`;
 
     document.getElementById("inProgressAssignments").textContent =
-        `In Progress Assignments: ${assignments.filter(a => a.status === "In Progress").length}`;
+        `In Progress Assignments: ${currentPageAssignments.filter(a => a.status === "In Progress").length}`;
 
     document.getElementById("notStartedAssignments").textContent =
-        `Not Started Assignments: ${assignments.filter(a => a.status === "Not Started").length}`;
+        `Not Started Assignments: ${currentPageAssignments.filter(a => a.status === "Not Started").length}`;
 }
