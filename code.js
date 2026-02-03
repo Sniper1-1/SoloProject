@@ -204,12 +204,14 @@ viewToggle.addEventListener("change", () => {
         addBtn.style.display = "none";
         pagingDiv.style.display = "none";
         statsDiv.style.display = "block";
+        pageHeader.textContent = "Assignment Statistics";
         renderStatistics();
     } else {
         statsDiv.style.display = "none";
         addBtn.style.display = "inline-block";
         pagingDiv.style.display = "block";
         tableDiv.style.display = "table";
+        pageHeader.textContent = "Course Assignments List";
     }
 });
 
