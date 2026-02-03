@@ -159,7 +159,7 @@ function renderPagingControls() {
 
     const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
 
-
+    // the pagging controls
     pagingDiv.innerHTML = `
         <button ${currentPage === 1 ? "disabled" : ""} id="firstPage" aria-label="First page">
             &lt;&lt;
@@ -167,7 +167,20 @@ function renderPagingControls() {
         <button ${currentPage === 1 ? "disabled" : ""} id="prevPage" aria-label="Previous page">
             &lt;
         </button>
-        <span>Page ${currentPage} of ${totalPages}</span>
+        
+        <label style="margin: 0 8px;">
+            Page
+            <input
+                type="number"
+                id="pageInput"
+                min="1"
+                max="${totalPages}"
+                value="${currentPage}"
+                style="width: 30px; text-align: center;"
+            >
+            of ${totalPages}
+        </label>
+
         <button ${currentPage === totalPages ? "disabled" : ""} id="nextPage" aria-label="Next page">
             &gt;
         </button>
@@ -191,6 +204,34 @@ function renderPagingControls() {
         const lastPage = Math.ceil(totalRecords / pageSize);
         loadAssignments(lastPage);
     });
+
+    const pageInput = document.getElementById("pageInput");
+
+    // enter a page number handler
+    pageInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+            let page = parseInt(pageInput.value, 10);
+
+            if (isNaN(page)) return;
+
+            page = Math.max(1, Math.min(page, totalPages));
+            loadAssignments(page);
+        }
+    });
+
+    // click outside page number input handler
+    pageInput.addEventListener("blur", () => {
+        let page = parseInt(pageInput.value, 10);
+
+        if (isNaN(page)) {
+            pageInput.value = currentPage;
+            return;
+        }
+
+        page = Math.max(1, Math.min(page, totalPages));
+        loadAssignments(page);
+    });
+
 }
 
 /* Statistics */
