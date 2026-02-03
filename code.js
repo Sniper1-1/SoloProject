@@ -196,16 +196,24 @@ viewToggle.addEventListener("change", () => {
 });
 
 
-function renderStatistics() {
-    document.getElementById("totalAssignments").textContent =
-        `Total Assignments: ${assignments.length}`;
+async function renderStatistics() {
+    try {
+        const res = await fetch(`${API_BASE}?stats=1`);
+        const stats = await res.json();
 
-    document.getElementById("completedAssignments").textContent =
-        `Completed Assignments: ${assignments.filter(a => a.status === "Completed").length}`;
+        document.getElementById("totalAssignments").textContent =
+            `Total Assignments: ${stats.total}`;
 
-    document.getElementById("inProgressAssignments").textContent =
-        `In Progress Assignments: ${assignments.filter(a => a.status === "In Progress").length}`;
+        document.getElementById("completedAssignments").textContent =
+            `Completed Assignments: ${stats.completed}`;
 
-    document.getElementById("notStartedAssignments").textContent =
-        `Not Started Assignments: ${assignments.filter(a => a.status === "Not Started").length}`;
+        document.getElementById("inProgressAssignments").textContent =
+            `In Progress Assignments: ${stats.inProgress}`;
+
+        document.getElementById("notStartedAssignments").textContent =
+            `Not Started Assignments: ${stats.notStarted}`;
+
+    } catch (err) {
+        console.error("Failed to load statistics", err);
+    }
 }

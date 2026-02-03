@@ -28,16 +28,31 @@ $id = end($parts);
 $assignmentId = is_numeric($id) ? (int)$id : null;
 
 if ($method === 'GET') {
-    // GET /assignments
     $data = loadData();
 
-    // Paging parameters
+    // STATS ONLY
+    if (isset($_GET['stats'])) {
+        $total = count($data);
+
+        $completed = count(array_filter($data, fn($a) => $a['status'] === 'Completed'));
+        $inProgress = count(array_filter($data, fn($a) => $a['status'] === 'In Progress'));
+        $notStarted = count(array_filter($data, fn($a) => $a['status'] === 'Not Started'));
+
+        echo json_encode([
+            'total' => $total,
+            'completed' => $completed,
+            'inProgress' => $inProgress,
+            'notStarted' => $notStarted
+        ]);
+        exit;
+    }
+
+    // NORMAL PAGED DATA
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
 
     $total = count($data);
     $start = ($page - 1) * $limit;
-
     $pagedData = array_slice($data, $start, $limit);
 
     echo json_encode([
@@ -46,7 +61,8 @@ if ($method === 'GET') {
         'page' => $page,
         'limit' => $limit
     ]);
-} 
+}
+ 
 elseif ($method === 'POST') {
     // POST /assignments
     $input = json_decode(file_get_contents('php://input'), true);
