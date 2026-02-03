@@ -161,17 +161,35 @@ function renderPagingControls() {
 
 
     pagingDiv.innerHTML = `
-        <button ${currentPage === 1 ? "disabled" : ""} id="prevPage">Previous</button>
+        <button ${currentPage === 1 ? "disabled" : ""} id="firstPage" aria-label="First page">
+            &lt;&lt;
+        </button>
+        <button ${currentPage === 1 ? "disabled" : ""} id="prevPage" aria-label="Previous page">
+            &lt;
+        </button>
         <span>Page ${currentPage} of ${totalPages}</span>
-        <button ${currentPage === totalPages ? "disabled" : ""} id="nextPage">Next</button>
+        <button ${currentPage === totalPages ? "disabled" : ""} id="nextPage" aria-label="Next page">
+            &gt;
+        </button>
+        <button ${currentPage === totalPages ? "disabled" : ""} id="lastPage" aria-label="Last page">
+            &gt;&gt;
+        </button>
     `;
 
+
+    document.getElementById("firstPage")?.addEventListener("click", () => {
+        loadAssignments(1);
+    });
     document.getElementById("prevPage")?.addEventListener("click", () => {
         loadAssignments(currentPage - 1);
     });
 
     document.getElementById("nextPage")?.addEventListener("click", () => {
         loadAssignments(currentPage + 1);
+    });
+    document.getElementById("lastPage")?.addEventListener("click", () => {
+        const lastPage = Math.ceil(totalRecords / pageSize);
+        loadAssignments(lastPage);
     });
 }
 

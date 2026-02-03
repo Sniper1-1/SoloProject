@@ -111,6 +111,7 @@ elseif ($method === 'PUT' && $assignmentId !== null) {
         echo json_encode(['error' => 'Not found']);
     }
 }
+//deleting specific
 elseif ($method === 'DELETE' && $assignmentId !== null) {
     // DELETE /assignments/<id>
     $data = loadData();
@@ -119,6 +120,13 @@ elseif ($method === 'DELETE' && $assignmentId !== null) {
     
     echo json_encode(['success' => true]);
 }
+//deleting all
+elseif ($method === 'DELETE' && $assignmentId === null) {
+    // DELETE ALL (PURGE)
+    saveData([]);
+    echo json_encode(['success' => true]);
+}
+
 else {
     http_response_code(404);
     echo json_encode(['error' => 'Not found']);
