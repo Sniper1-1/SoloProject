@@ -155,84 +155,61 @@ function attachButtonHandlers() {
 /* Paging controls */
 const pagingDiv = document.getElementById("paging");
 function renderPagingControls() {
-    if (!pagingDiv) return;
-
     const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
 
-    // the pagging controls
-    pagingDiv.innerHTML = `
-        <button ${currentPage === 1 ? "disabled" : ""} id="firstPage" aria-label="First page">
-            &lt;&lt;
-        </button>
-        <button ${currentPage === 1 ? "disabled" : ""} id="prevPage" aria-label="Previous page">
-            &lt;
-        </button>
-        
-        <label style="margin: 0 8px;">
-            Page
-            <input
-                type="number"
-                id="pageInput"
-                min="1"
-                max="${totalPages}"
-                value="${currentPage}"
-                style="width: 30px; text-align: center;"
-            >
-            of ${totalPages}
-        </label>
+    // Update values
+    document.getElementById("pageInput").value = currentPage;
+    document.getElementById("pageInput").max = totalPages;
+    document.getElementById("pageTotal").textContent = `of ${totalPages}`;
 
-        <button ${currentPage === totalPages ? "disabled" : ""} id="nextPage" aria-label="Next page">
-            &gt;
-        </button>
-        <button ${currentPage === totalPages ? "disabled" : ""} id="lastPage" aria-label="Last page">
-            &gt;&gt;
-        </button>
-    `;
-
-
-    document.getElementById("firstPage")?.addEventListener("click", () => {
-        loadAssignments(1);
-    });
-    document.getElementById("prevPage")?.addEventListener("click", () => {
-        loadAssignments(currentPage - 1);
-    });
-
-    document.getElementById("nextPage")?.addEventListener("click", () => {
-        loadAssignments(currentPage + 1);
-    });
-    document.getElementById("lastPage")?.addEventListener("click", () => {
-        const lastPage = Math.ceil(totalRecords / pageSize);
-        loadAssignments(lastPage);
-    });
-
-    const pageInput = document.getElementById("pageInput");
-
-    // enter a page number handler
-    pageInput.addEventListener("keydown", e => {
-        if (e.key === "Enter") {
-            let page = parseInt(pageInput.value, 10);
-
-            if (isNaN(page)) return;
-
-            page = Math.max(1, Math.min(page, totalPages));
-            loadAssignments(page);
-        }
-    });
-
-    // click outside page number input handler
-    pageInput.addEventListener("blur", () => {
-        let page = parseInt(pageInput.value, 10);
-
-        if (isNaN(page)) {
-            pageInput.value = currentPage;
-            return;
-        }
-
-        page = Math.max(1, Math.min(page, totalPages));
-        loadAssignments(page);
-    });
-
+    // Enable / disable buttons
+    document.getElementById("firstPage").disabled = currentPage === 1;
+    document.getElementById("prevPage").disabled = currentPage === 1;
+    document.getElementById("nextPage").disabled = currentPage === totalPages;
+    document.getElementById("lastPage").disabled = currentPage === totalPages;
 }
+//paging button handlers
+document.getElementById("firstPage").addEventListener("click", () => {
+    loadAssignments(1);
+});
+
+document.getElementById("prevPage").addEventListener("click", () => {
+    loadAssignments(currentPage - 1);
+});
+
+document.getElementById("nextPage").addEventListener("click", () => {
+    loadAssignments(currentPage + 1);
+});
+
+document.getElementById("lastPage").addEventListener("click", () => {
+    const lastPage = Math.ceil(totalRecords / pageSize);
+    loadAssignments(lastPage);
+});
+
+// text box page number input
+const pageInput = document.getElementById("pageInput");
+//jump to page on enter
+pageInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+        jumpToPage();
+    }
+});
+//jump to page on deselect text box
+pageInput.addEventListener("blur", jumpToPage);
+
+function jumpToPage() {
+    const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
+    let page = parseInt(pageInput.value, 10);
+
+    if (isNaN(page)) {
+        pageInput.value = currentPage;
+        return;
+    }
+
+    page = Math.max(1, Math.min(page, totalPages));
+    loadAssignments(page);
+}
+
 
 /* Statistics */
 const viewToggle = document.getElementById("viewToggle");

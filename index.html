@@ -64,7 +64,21 @@
 
     <button id="addBtn" type="button">Add New Assignment</button>
 
-    <div id="paging" style="margin-top: 10px;"></div>
+    <!-- Controls for navigating the table pages -->
+    <div id="paging" class="paging">
+        <button id="firstPage" aria-label="First page">&lt;&lt;</button>
+        <button id="prevPage" aria-label="Previous page">&lt;</button>
+
+        <label class="page-label">
+            Page
+            <input type="number" id="pageInput" min="1">
+            <span id="pageTotal"></span>
+        </label>
+
+        <button id="nextPage" aria-label="Next page">&gt;</button>
+        <button id="lastPage" aria-label="Last page">&gt;&gt;</button>
+    </div>
+
 
 
     <!-- The statistics for when statistic view is active -->
