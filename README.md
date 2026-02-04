@@ -1,5 +1,5 @@
 Folder name: SoloProject <br>
-Local URL: http://localhost/SoloProject/
+Local URL: http://localhost/SoloProject/ <br>
 Netlify URL: https://jchookecpsc3750soloproject.netlify.app/
 
 Backend language: PHP <br>
