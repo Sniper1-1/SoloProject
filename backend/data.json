@@ -1,212 +1,212 @@
 [
     {
-        "course": "MATH 3040",
-        "name": "Project",
-        "dueDate": "2026-02-13",
-        "status": "Not Started",
+        "course": "CPSC 1020",
+        "name": "Homework",
+        "dueDate": "2026-02-05",
+        "status": "Completed",
         "id": 1
     },
     {
-        "course": "PHYS 2010",
-        "name": "Lab",
-        "dueDate": "2026-02-27",
+        "course": "ECON 1010",
+        "name": "Homework",
+        "dueDate": "2026-02-20",
         "status": "In Progress",
         "id": 2
     },
     {
-        "course": "HIST 1030",
-        "name": "Exam studyguide",
-        "dueDate": "2026-02-22",
-        "status": "Completed",
+        "course": "ENGL 2010",
+        "name": "Project",
+        "dueDate": "2026-02-18",
+        "status": "In Progress",
         "id": 3
     },
     {
-        "course": "CHEM 2020",
-        "name": "Presentation",
-        "dueDate": "2026-02-13",
+        "course": "ENGL 2030",
+        "name": "Report",
+        "dueDate": "2026-03-01",
         "status": "In Progress",
         "id": 4
     },
     {
-        "course": "BIO 2020",
-        "name": "Exam studyguide",
-        "dueDate": "2026-03-02",
-        "status": "Completed",
+        "course": "ECON 2020",
+        "name": "Project",
+        "dueDate": "2026-02-09",
+        "status": "Not Started",
         "id": 5
     },
     {
-        "course": "CHEM 2010",
-        "name": "Lab",
-        "dueDate": "2026-03-05",
+        "course": "ENGL 2030",
+        "name": "Presentation",
+        "dueDate": "2026-02-15",
         "status": "Not Started",
         "id": 6
     },
     {
-        "course": "ECON 1020",
-        "name": "Report",
-        "dueDate": "2026-02-21",
+        "course": "ENGL 3040",
+        "name": "Presentation",
+        "dueDate": "2026-03-02",
         "status": "Not Started",
         "id": 7
     },
     {
-        "course": "ECON 1030",
-        "name": "Homework",
-        "dueDate": "2026-02-21",
+        "course": "PHYS 2010",
+        "name": "Report",
+        "dueDate": "2026-02-04",
         "status": "Completed",
         "id": 8
     },
     {
-        "course": "BIO 2020",
+        "course": "MATH 3040",
         "name": "Homework",
-        "dueDate": "2026-02-10",
+        "dueDate": "2026-02-06",
         "status": "Completed",
         "id": 9
     },
     {
-        "course": "ECON 2020",
-        "name": "Exam studyguide",
-        "dueDate": "2026-02-28",
-        "status": "In Progress",
+        "course": "ECON 2030",
+        "name": "Lab",
+        "dueDate": "2026-02-07",
+        "status": "Completed",
         "id": 10
     },
     {
-        "course": "PHYS 3020",
-        "name": "Exam studyguide",
-        "dueDate": "2026-02-11",
+        "course": "CPSC 1030",
+        "name": "Homework",
+        "dueDate": "2026-02-23",
         "status": "Completed",
         "id": 11
     },
     {
-        "course": "ENGL 3010",
-        "name": "Project",
-        "dueDate": "2026-03-05",
+        "course": "BIO 1010",
+        "name": "Exam studyguide",
+        "dueDate": "2026-02-09",
         "status": "Not Started",
         "id": 12
     },
     {
-        "course": "HIST 1020",
+        "course": "ENGL 1010",
         "name": "Project",
-        "dueDate": "2026-03-02",
-        "status": "Not Started",
+        "dueDate": "2026-02-11",
+        "status": "In Progress",
         "id": 13
     },
     {
-        "course": "CHEM 3040",
-        "name": "Homework",
-        "dueDate": "2026-02-05",
-        "status": "Completed",
+        "course": "ECON 2030",
+        "name": "Project",
+        "dueDate": "2026-02-22",
+        "status": "In Progress",
         "id": 14
     },
     {
-        "course": "ECON 1020",
-        "name": "Lab",
-        "dueDate": "2026-02-09",
+        "course": "PHYS 3010",
+        "name": "Report",
+        "dueDate": "2026-02-20",
         "status": "Not Started",
         "id": 15
     },
     {
-        "course": "ENGL 3010",
-        "name": "Homework",
-        "dueDate": "2026-02-04",
-        "status": "Completed",
+        "course": "ENGL 3040",
+        "name": "Presentation",
+        "dueDate": "2026-02-07",
+        "status": "Not Started",
         "id": 16
     },
     {
-        "course": "BIO 3040",
+        "course": "CPSC 2010",
         "name": "Project",
-        "dueDate": "2026-02-18",
+        "dueDate": "2026-02-07",
         "status": "Completed",
         "id": 17
     },
     {
-        "course": "CHEM 2030",
-        "name": "Presentation",
-        "dueDate": "2026-02-13",
+        "course": "CHEM 1030",
+        "name": "Homework",
+        "dueDate": "2026-02-09",
         "status": "Completed",
         "id": 18
     },
     {
-        "course": "ENGL 1020",
+        "course": "PHYS 1030",
         "name": "Exam studyguide",
-        "dueDate": "2026-02-26",
+        "dueDate": "2026-02-05",
         "status": "Not Started",
         "id": 19
     },
     {
-        "course": "CPSC 3020",
-        "name": "Presentation",
-        "dueDate": "2026-02-21",
+        "course": "HIST 3020",
+        "name": "Report",
+        "dueDate": "2026-02-28",
         "status": "Completed",
         "id": 20
     },
     {
-        "course": "HIST 1010",
-        "name": "Report",
-        "dueDate": "2026-02-09",
+        "course": "CHEM 3040",
+        "name": "Presentation",
+        "dueDate": "2026-02-23",
         "status": "Not Started",
         "id": 21
     },
     {
-        "course": "CPSC 1010",
-        "name": "Project",
-        "dueDate": "2026-02-13",
-        "status": "Not Started",
+        "course": "MATH 1030",
+        "name": "Exam studyguide",
+        "dueDate": "2026-03-05",
+        "status": "Completed",
         "id": 22
     },
     {
-        "course": "PHYS 1020",
-        "name": "Homework",
-        "dueDate": "2026-03-02",
+        "course": "CHEM 1020",
+        "name": "Lab",
+        "dueDate": "2026-02-10",
         "status": "In Progress",
         "id": 23
     },
     {
-        "course": "MATH 1010",
-        "name": "Project",
-        "dueDate": "2026-02-04",
-        "status": "In Progress",
-        "id": 24
-    },
-    {
-        "course": "CPSC 2030",
-        "name": "Project",
-        "dueDate": "2026-02-18",
-        "status": "Not Started",
-        "id": 25
-    },
-    {
-        "course": "HIST 2030",
-        "name": "Presentation",
-        "dueDate": "2026-02-05",
-        "status": "Not Started",
-        "id": 26
-    },
-    {
-        "course": "BIO 3010",
-        "name": "Report",
+        "course": "BIO 3040",
+        "name": "Lab",
         "dueDate": "2026-02-20",
-        "status": "Not Started",
-        "id": 27
+        "status": "Completed",
+        "id": 24
     },
     {
         "course": "CHEM 3020",
         "name": "Lab",
-        "dueDate": "2026-02-14",
+        "dueDate": "2026-02-16",
+        "status": "Not Started",
+        "id": 25
+    },
+    {
+        "course": "ECON 2030",
+        "name": "Exam studyguide",
+        "dueDate": "2026-02-15",
+        "status": "Completed",
+        "id": 26
+    },
+    {
+        "course": "PHYS 2030",
+        "name": "Lab",
+        "dueDate": "2026-03-01",
         "status": "In Progress",
+        "id": 27
+    },
+    {
+        "course": "CHEM 2030",
+        "name": "Homework",
+        "dueDate": "2026-03-01",
+        "status": "Not Started",
         "id": 28
     },
     {
-        "course": "BIO 2030",
-        "name": "Report",
-        "dueDate": "2026-02-04",
-        "status": "Not Started",
+        "course": "ECON 2030",
+        "name": "Lab",
+        "dueDate": "2026-03-01",
+        "status": "In Progress",
         "id": 29
     },
     {
-        "course": "BIO 1010",
+        "course": "ECON 3010",
         "name": "Homework",
-        "dueDate": "2026-02-19",
-        "status": "In Progress",
+        "dueDate": "2026-03-02",
+        "status": "Not Started",
         "id": 30
     }
 ]
