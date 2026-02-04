@@ -221,6 +221,8 @@ viewToggle.addEventListener("change", () => {
         tableDiv.style.display = "none";
         addBtn.style.display = "none";
         pagingDiv.style.display = "none";
+        addTestEntriesBtn.style.display = "none";
+        purgeBtn.style.display = "none";
         statsDiv.style.display = "block";
         pageHeader.textContent = "Assignment Statistics";
         renderStatistics();
@@ -229,6 +231,8 @@ viewToggle.addEventListener("change", () => {
         addBtn.style.display = "inline-block";
         pagingDiv.style.display = "block";
         tableDiv.style.display = "table";
+        addTestEntriesBtn.style.display = "inline-block";
+        purgeBtn.style.display = "inline-block";
         pageHeader.textContent = "Course Assignments List";
     }
 });
