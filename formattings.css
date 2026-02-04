@@ -128,3 +128,26 @@ th { /*The table headings have padding*/
     padding: 5px;
     background-color: white;
 }
+
+/* Page navigation styles------------------------------------------------------ */
+.paging {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.paging button {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.paging button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-label input {
+    width: 40px;
+    text-align: center;
+}

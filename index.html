@@ -64,6 +64,23 @@
 
     <button id="addBtn" type="button">Add New Assignment</button>
 
+    <!-- Controls for navigating the table pages -->
+    <div id="paging" class="paging">
+        <button id="firstPage" aria-label="First page">&lt;&lt;</button>
+        <button id="prevPage" aria-label="Previous page">&lt;</button>
+
+        <label class="page-label">
+            Page
+            <input type="number" id="pageInput" min="1">
+            <span id="pageTotal"></span>
+        </label>
+
+        <button id="nextPage" aria-label="Next page">&gt;</button>
+        <button id="lastPage" aria-label="Last page">&gt;&gt;</button>
+    </div>
+
+
+
     <!-- The statistics for when statistic view is active -->
     <div id="statistics" style="display:none;">
         <p id="totalAssignments">Total Assignments: 0</p>
@@ -74,6 +91,10 @@
 
     <button id="purgeBtn" type="button">⚠️Purge⚠️</button>
     <button id="addTestEntriesBtn" type="button">Add Test Entries</button>
+
+    <footer>
+        <p><span id="disclaimerText">Disclaimer: Application currently requires local server (like through XAMPP) for running backend.</span></p>
+    </footer>
     
     <script src="code.js"></script>
     <script src="debug/debug.js"></script>

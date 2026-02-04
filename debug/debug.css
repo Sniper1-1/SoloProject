@@ -31,3 +31,16 @@
 #addTestEntriesBtn:hover {
     background-color: rgb(3, 3, 68);
 }
+
+#disclaimerText {
+    font-size: 12px;
+    color: red;
+    font-weight: bold;
+    background-color: black;
+    background-size:auto;
+    padding:5px;
+    text-align: bottom;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
