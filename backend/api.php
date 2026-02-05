@@ -42,9 +42,9 @@ if ($method === 'GET') {
     if (isset($_GET['stats'])) {
         $total = count($data);
 
-        $completed = count(array_filter($data, fn($a) => $a['assignmentStatus'] === 'Completed'));
-        $inProgress = count(array_filter($data, fn($a) => $a['assignmentStatus'] === 'In Progress'));
-        $notStarted = count(array_filter($data, fn($a) => $a['assignmentStatus'] === 'Not Started'));
+        $completed = count(array_filter($data, fn($a) => $a['status'] === 'Completed'));
+        $inProgress = count(array_filter($data, fn($a) => $a['status'] === 'In Progress'));
+        $notStarted = count(array_filter($data, fn($a) => $a['status'] === 'Not Started'));
 
         echo json_encode([
             'total' => $total,
@@ -75,7 +75,7 @@ elseif ($method === 'POST') {
     // POST /assignments
     $input = json_decode(file_get_contents('php://input'), true);
     
-    $required = ['course', 'name', 'assignmentStatus'];
+    $required = ['course', 'name', 'status'];
     foreach ($required as $field) {
         if (empty($input[$field])) {
             http_response_code(400);
