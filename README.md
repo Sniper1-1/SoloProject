@@ -15,5 +15,11 @@ JSON Persistence explanation: Every entry is stored as follows:
 ```
 The Javascript code is invoked via things like buttons, which then calls the PHP backend to interact with the JSON file for creating a new entry, reading entries, updating entries, and deleting entries. Reloading the page will maintain the data in the table as it is stored in the json file on the server in the backend and not the browser. <br>
 
+
+
+https://github.com/user-attachments/assets/63655171-fcd2-4d86-bdd2-0dea757b78d8
+
+
+
 Credit to w3schools.com and ChatGPT for some help on how to do stuff/formatting and debugging.
 
