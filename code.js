@@ -11,7 +11,7 @@ addBtn.addEventListener("click", () => {
     //clear the popup for entering an entry so that it doesn't open with last values
     form.reset();
     editId = null;
-    
+
     document.getElementById("modalOverlay").style.display = "flex";
 });
 
@@ -125,7 +125,7 @@ function attachButtonHandlers() {
             course.value = assignment.course;
             assignmentName.value = assignment.name;
             dueDate.value = assignment.dueDate;
-            document.getElementById("status").value = assignment.status;
+            document.getElementById("status").value = assignment.status; // < uses getElementById instead of status.value because status is a deprecated reserved word. Wasn't breaking, but wasn't exactly working.
 
             editId = id;
             modalOverlay.style.display = "flex";
