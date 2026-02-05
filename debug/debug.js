@@ -29,12 +29,12 @@ function fillTestData() {
             const name = names[Math.floor(Math.random() * names.length)];
             const dueDate = new Date(Date.now() + Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
             const statusOptions = ["Not Started", "In Progress", "Completed"];
-            const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+            const assignmentStatus = statusOptions[Math.floor(Math.random() * statusOptions.length)];
             
             document.getElementById("course").value = course;
             document.getElementById("assignmentName").value = name;
             document.getElementById("dueDate").value = dueDate;
-            document.getElementById("status").value = status;
+            document.getElementById("assignmentStatus").value = assignmentStatus;
 
             form.dispatchEvent(new Event('submit'));
         }, i * 50); // 50ms interval between requests (i*50 is because without it they all queue and run at 50ms togther)

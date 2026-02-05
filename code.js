@@ -46,7 +46,7 @@ form.addEventListener("submit", async function (event) {
         course: document.getElementById("course").value.trim(),
         name: document.getElementById("assignmentName").value.trim(),
         dueDate: document.getElementById("dueDate").value,
-        status: document.getElementById("status").value
+        assignmentStatus: document.getElementById("assignmentStatus").value
     };
 
     try {
@@ -100,7 +100,7 @@ function renderTable() {
             <td>${assignment.course}</td>
             <td>${assignment.name}</td>
             <td>${assignment.dueDate}</td>
-            <td>${assignment.status}</td>
+            <td>${assignment.assignmentStatus}</td>
             <td>
                 <button class="updateBtn" data-id="${assignment.id}">Edit</button>
                 <button class="deleteBtn" data-id="${assignment.id}">Delete</button>
@@ -123,7 +123,7 @@ function attachButtonHandlers() {
             course.value = assignment.course;
             assignmentName.value = assignment.name;
             dueDate.value = assignment.dueDate;
-            status.value = assignment.status;
+            assignmentStatus.value = assignment.assignmentStatus;
 
             editId = id;
             modalOverlay.style.display = "flex";
