@@ -123,7 +123,7 @@ function attachButtonHandlers() {
             course.value = assignment.course;
             assignmentName.value = assignment.name;
             dueDate.value = assignment.dueDate;
-            status.value = assignment.status;
+            document.getElementById("status").value = assignment.status;
 
             editId = id;
             modalOverlay.style.display = "flex";
