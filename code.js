@@ -8,6 +8,10 @@ let totalRecords = 0;
 /* Button handling */
 const addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", () => {
+    //clear the popup for entering an entry so that it doesn't open with last values
+    form.reset();
+    editId = null;
+    
     document.getElementById("modalOverlay").style.display = "flex";
 });
 
@@ -71,8 +75,6 @@ form.addEventListener("submit", async function (event) {
             editId = null;
             await loadAssignments(currentPage);
         }
-        //clear and close the popup for entering an entry
-        form.reset();
         modalOverlay.style.display = "none";
 
     } catch (err) {
