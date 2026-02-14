@@ -12,6 +12,24 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
+// Database connection using environment variables
+$host = getenv("DB_HOST");
+$db   = getenv("DB_NAME");
+$user = getenv("DB_USER");
+$pass = getenv("DB_PASSWORD");
+
+try {
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$db;charset=utf8mb4",
+        $user,
+        $pass,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+} catch (PDOException $e) {
+    echo json_encode(["error" => "Database connection failed"]);
+    exit;
+}
+
 $DATA_FILE = "data.json";
 
 function loadData() {
@@ -35,104 +53,107 @@ $id = end($parts);
 // Check if last part is a number (assignment ID)
 $assignmentId = is_numeric($id) ? (int)$id : null;
 
-if ($method === 'GET') {
-    $data = loadData();
+// requests handling
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['stats'])) {
 
-    // STATS ONLY
-    if (isset($_GET['stats'])) {
-        $total = count($data);
+    $page  = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $offset = ($page - 1) * $limit;
 
-        $completed = count(array_filter($data, fn($a) => $a['status'] === 'Completed'));
-        $inProgress = count(array_filter($data, fn($a) => $a['status'] === 'In Progress'));
-        $notStarted = count(array_filter($data, fn($a) => $a['status'] === 'Not Started'));
+    // Get total count
+    $total = $pdo->query("SELECT COUNT(*) FROM assignments")->fetchColumn();
 
-        echo json_encode([
-            'total' => $total,
-            'completed' => $completed,
-            'inProgress' => $inProgress,
-            'notStarted' => $notStarted
-        ]);
-        exit;
-    }
+    // Get paged data
+    $stmt = $pdo->prepare("SELECT * FROM assignments ORDER BY id LIMIT :limit OFFSET :offset");
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
 
-    // NORMAL PAGED DATA
-    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
-
-    $total = count($data);
-    $start = ($page - 1) * $limit;
-    $pagedData = array_slice($data, $start, $limit);
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([
-        'data' => $pagedData,
-        'total' => $total,
-        'page' => $page,
-        'limit' => $limit
+        "data" => $data,
+        "total" => (int)$total,
+        "page" => $page
     ]);
+    exit;
 }
- 
-elseif ($method === 'POST') {
-    // POST /assignments
-    $input = json_decode(file_get_contents('php://input'), true);
-    
-    $required = ['course', 'name', 'status'];
-    foreach ($required as $field) {
-        if (empty($input[$field])) {
-            http_response_code(400);
-            echo json_encode(['error' => "$field required"]);
-            exit;
-        }
-    }
-    
-    $data = loadData();
-    $newId = 1;
-    if (!empty($data)) {
-        $newId = max(array_column($data, 'id')) + 1;
-    }
-    
-    $input['id'] = $newId;
-    $data[] = $input;
-    saveData($data);
-    
-    http_response_code(201);
-    echo json_encode($input);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $input = json_decode(file_get_contents("php://input"), true);
+
+    $stmt = $pdo->prepare("
+        INSERT INTO assignments (course, name, dueDate, status)
+        VALUES (:course, :name, :dueDate, :status)
+    ");
+
+    $stmt->execute([
+        ":course" => $input['course'],
+        ":name" => $input['name'],
+        ":dueDate" => $input['dueDate'],
+        ":status" => $input['status']
+    ]);
+
+    echo json_encode(["success" => true]);
+    exit;
 }
-elseif ($method === 'PUT' && $assignmentId !== null) {
-    // PUT /assignments/<id>
-    $input = json_decode(file_get_contents('php://input'), true);
-    $data = loadData();
-    
-    $found = false;
-    foreach ($data as &$assignment) {
-        if ($assignment['id'] === $assignmentId) {
-            $assignment = array_merge($assignment, $input);
-            $found = true;
-            break;
-        }
-    }
-    
-    if ($found) {
-        saveData($data);
-        echo json_encode($assignment);
-    } else {
-        http_response_code(404);
-        echo json_encode(['error' => 'Not found']);
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+
+    $id = basename($_SERVER['REQUEST_URI']);
+    $input = json_decode(file_get_contents("php://input"), true);
+
+    $stmt = $pdo->prepare("
+        UPDATE assignments
+        SET course = :course,
+            name = :name,
+            dueDate = :dueDate,
+            status = :status
+        WHERE id = :id
+    ");
+
+    $stmt->execute([
+        ":course" => $input['course'],
+        ":name" => $input['name'],
+        ":dueDate" => $input['dueDate'],
+        ":status" => $input['status'],
+        ":id" => $id
+    ]);
+
+    echo json_encode(["success" => true]);
+    exit;
 }
-//deleting specific
-elseif ($method === 'DELETE' && $assignmentId !== null) {
-    // DELETE /assignments/<id>
-    $data = loadData();
-    $data = array_filter($data, fn($a) => $a['id'] !== $assignmentId);
-    saveData(array_values($data));
-    
-    echo json_encode(['success' => true]);
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+    $id = basename($_SERVER['REQUEST_URI']);
+
+    $stmt = $pdo->prepare("DELETE FROM assignments WHERE id = :id");
+    $stmt->execute([":id" => $id]);
+
+    echo json_encode(["success" => true]);
+    exit;
 }
+
 //deleting all
 elseif ($method === 'DELETE' && $assignmentId === null) {
     // DELETE ALL (PURGE)
-    saveData([]);
+    $pdo->exec("DELETE FROM assignments");
     echo json_encode(['success' => true]);
+    exit;
+}
+elseif (isset($_GET['stats'])) {
+
+    $total = $pdo->query("SELECT COUNT(*) FROM assignments")->fetchColumn();
+    $completed = $pdo->query("SELECT COUNT(*) FROM assignments WHERE status='Completed'")->fetchColumn();
+    $inProgress = $pdo->query("SELECT COUNT(*) FROM assignments WHERE status='In Progress'")->fetchColumn();
+    $notStarted = $pdo->query("SELECT COUNT(*) FROM assignments WHERE status='Not Started'")->fetchColumn();
+
+    echo json_encode([
+        "Total Assignments" => (int)$total,
+        "Completed Assignments" => (int)$completed,
+        "In Progress Assignments" => (int)$inProgress,
+        "Not Started Assignments" => (int)$notStarted
+    ]);
+    exit;
 }
 
 else {
