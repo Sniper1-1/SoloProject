@@ -124,22 +124,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 }
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
-    $id = basename($_SERVER['REQUEST_URI']);
+    if ($assignmentId !== null) {
+        // DELETE ONE
+        $stmt = $pdo->prepare("DELETE FROM assignments WHERE id = :id");
+        $stmt->execute([":id" => $assignmentId]);
 
-    $stmt = $pdo->prepare("DELETE FROM assignments WHERE id = :id");
-    $stmt->execute([":id" => $id]);
-
-    echo json_encode(["success" => true]);
-    exit;
+        echo json_encode(["success" => true]);
+        exit;
+    } else {
+        // DELETE ALL (PURGE)
+        $pdo->exec("DELETE FROM assignments");
+        echo json_encode(["success" => true]);
+        exit;
+    }
 }
 
-//deleting all
-elseif ($method === 'DELETE' && $assignmentId === null) {
-    // DELETE ALL (PURGE)
-    $pdo->exec("DELETE FROM assignments");
-    echo json_encode(['success' => true]);
-    exit;
-}
 elseif (isset($_GET['stats'])) {
 
     $total = $pdo->query("SELECT COUNT(*) FROM assignments")->fetchColumn();
@@ -148,10 +147,10 @@ elseif (isset($_GET['stats'])) {
     $notStarted = $pdo->query("SELECT COUNT(*) FROM assignments WHERE status='Not Started'")->fetchColumn();
 
     echo json_encode([
-        "Total Assignments" => (int)$total,
-        "Completed Assignments" => (int)$completed,
-        "In Progress Assignments" => (int)$inProgress,
-        "Not Started Assignments" => (int)$notStarted
+        "total" => (int)$total,
+        "completed" => (int)$completed,
+        "inProgress" => (int)$inProgress,
+        "notStarted" => (int)$notStarted
     ]);
     exit;
 }
