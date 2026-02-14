@@ -1,4 +1,5 @@
-const API_BASE = "http://localhost/SoloProject/backend/api.php";
+const API_BASE = "./backend/api.php";
+
 
 /* Paging */
 let currentPage = 1;
