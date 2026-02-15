@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([
         ":course" => $input['course'],
         ":name" => $input['name'],
-        ":dueDate" => $input['dueDate'],
+        ":dueDate" => !empty($input['dueDate']) ? $input['dueDate'] : null,
         ":status" => $input['status']
     ]);
 
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $stmt->execute([
         ":course" => $input['course'],
         ":name" => $input['name'],
-        ":dueDate" => $input['dueDate'],
+        ":dueDate" => !empty($input['dueDate']) ? $input['dueDate'] : null,
         ":status" => $input['status'],
         ":id" => $id
     ]);

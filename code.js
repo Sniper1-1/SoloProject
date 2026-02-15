@@ -98,11 +98,12 @@ function renderTable() {
 
     assignments.forEach(assignment => {
         const row = document.createElement("tr");
+        // dueDate is blank if not provided
         row.innerHTML = `
             <td>${assignment.id}</td>
             <td>${assignment.course}</td>
             <td>${assignment.name}</td>
-            <td>${assignment.dueDate}</td>
+            <td>${assignment.dueDate || ""}</td>
             <td>${assignment.status}</td>
             <td>
                 <button class="updateBtn" data-id="${assignment.id}">Edit</button>
