@@ -151,3 +151,43 @@ th { /*The table headings have padding*/
     width: 40px;
     text-align: center;
 }
+
+/* Search and filter styles ------------------------------------------------------ */
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Make search box wider */
+#searchInput {
+    width: 300px;
+    padding: 6px;
+}
+
+/* Make entries-per-page box smaller */
+#entriesPerPage {
+    width: 60px;
+    padding: 6px;
+    text-align: center;
+}
+/*For sorting by column*/
+th[data-sort] {
+    cursor: pointer;
+    position: relative;
+}
+
+th[data-sort]:hover {
+    background-color: #e0e0e0;
+}
+/* Sort arrows */
+th.sorted-asc::after {
+    content: " ▲";
+    font-size: 12px;
+}
+
+th.sorted-desc::after {
+    content: " ▼";
+    font-size: 12px;
+}

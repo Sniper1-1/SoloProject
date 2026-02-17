@@ -1,4 +1,9 @@
 <?php
+//load local environment variables if file exists
+if (file_exists(__DIR__ . '/.env.local.php')) {
+    require __DIR__ . '/.env.local.php';
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header('Content-Type: application/json');
     header('Access-Control-Allow-Origin: *');
@@ -60,15 +65,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['stats'])) {
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $offset = ($page - 1) * $limit;
 
-    // Get total count
-    $total = $pdo->query("SELECT COUNT(*) FROM assignments")->fetchColumn();
+    // Search
+    $search = $_GET['search'] ?? '';
 
-    // Get paged data
-    $stmt = $pdo->prepare("SELECT * FROM assignments ORDER BY id LIMIT :limit OFFSET :offset");
+    // Sorting
+    $sort = $_GET['sort'] ?? 'id';
+    $direction = $_GET['direction'] ?? 'ASC';
+
+    $allowedSorts = ['id','course','name','dueDate','status'];
+    if (!in_array($sort, $allowedSorts)) {
+        $sort = 'id';
+    }
+
+    $direction = strtoupper($direction) === 'DESC' ? 'DESC' : 'ASC';
+
+    // Filtering (Search condition)
+    $where = "";
+    $params = [];
+
+    if (!empty($search)) {
+        $where = "WHERE course LIKE :search OR name LIKE :search";
+        $params[':search'] = "%$search%";
+    }
+
+    // Get total count with filter
+    $totalStmt = $pdo->prepare("SELECT COUNT(*) FROM assignments $where");
+    $totalStmt->execute($params);
+    $total = $totalStmt->fetchColumn();
+
+    // Get paginated, sorted, filtered data
+    $stmt = $pdo->prepare("
+        SELECT * FROM assignments
+        $where
+        ORDER BY $sort $direction
+        LIMIT :limit OFFSET :offset
+    ");
+
+    foreach ($params as $key => $val) {
+        $stmt->bindValue($key, $val);
+    }
+
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->execute();
 
+    $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([
@@ -133,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         exit;
     } else {
         // DELETE ALL (PURGE)
-        $pdo->exec("DELETE FROM assignments");
+        $pdo->exec("TRUNCATE assignments");
         echo json_encode(["success" => true]);
         exit;
     }

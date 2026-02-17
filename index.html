@@ -21,13 +21,24 @@
         <span class="toggle-label right">View Statistics</span>
     </div>
 
+    <!-- Search input for filtering assignments -->
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search by course or assignment name">
+        <label>
+            Entries per page:
+            <input type="number" id="entriesPerPage" value="10" min="1">
+        </label>
+    </div>
+
+
+
     <table id="assignmentsTable">
         <tr> <!-- Table Headers -->
-            <th>ID Number</th>
-            <th>Course</th>
-            <th>Assignment Name</th>
-            <th>Due Date</th>
-            <th>Status</th>
+            <th data-sort="id">ID Number</th>
+            <th data-sort="course">Course</th>
+            <th data-sort="name">Assignment Name</th>
+            <th data-sort="dueDate">Due Date</th>
+            <th data-sort="status">Status</th>
             <th>Actions</th> <!-- For Edit/Delete buttons -->
         </tr>
         <tbody id="assignments">
@@ -87,6 +98,7 @@
         <p id="completedAssignments">Completed Assignments: 0</p>
         <p id="inProgressAssignments">In Progress Assignments: 0</p>
         <p id="notStartedAssignments">Not Started Assignments: 0</p>
+        <p id="numOfAssignmentsPerPage">Number of Assignments Per Page: 0</p>
     </div>
 
     <button id="purgeBtn" type="button">⚠️Purge⚠️</button>
