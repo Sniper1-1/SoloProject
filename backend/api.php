@@ -123,15 +123,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents("php://input"), true);
 
     $stmt = $pdo->prepare("
-        INSERT INTO assignments (course, name, dueDate, status)
-        VALUES (:course, :name, :dueDate, :status)
+        INSERT INTO assignments (course, name, dueDate, status, imageUrl)
+        VALUES (:course, :name, :dueDate, :status, :imageUrl)
     ");
 
     $stmt->execute([
         ":course" => $input['course'],
         ":name" => $input['name'],
         ":dueDate" => !empty($input['dueDate']) ? $input['dueDate'] : null,
-        ":status" => $input['status']
+        ":status" => $input['status'],
+        ":imageUrl" => !empty($input['imageUrl']) ? $input['imageUrl'] : null
     ]);
 
     echo json_encode(["success" => true]);
@@ -147,7 +148,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         SET course = :course,
             name = :name,
             dueDate = :dueDate,
-            status = :status
+            status = :status,
+            imageUrl = :imageUrl
         WHERE id = :id
     ");
 
@@ -156,6 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         ":name" => $input['name'],
         ":dueDate" => !empty($input['dueDate']) ? $input['dueDate'] : null,
         ":status" => $input['status'],
+        ":imageUrl" => !empty($input['imageUrl']) ? $input['imageUrl'] : null,
         ":id" => $id
     ]);
 

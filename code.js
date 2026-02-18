@@ -62,8 +62,10 @@ form.addEventListener("submit", async function (event) {
         course: document.getElementById("course").value.trim(),
         name: document.getElementById("assignmentName").value.trim(),
         dueDate: document.getElementById("dueDate").value,
-        status: document.getElementById("status").value
+        status: document.getElementById("status").value,
+        imageUrl: document.getElementById("imageUrl").value.trim()
     };
+
 
     try {
         if (editId === null) {
@@ -116,6 +118,16 @@ function renderTable() {
             <td>${assignment.name}</td>
             <td>${assignment.dueDate || ""}</td>
             <td>${assignment.status}</td>
+            
+            <td>
+            <img 
+                src="${assignment.imageUrl || 'images/placeholder.png'}"
+                alt="Assignment Image"
+                class="thumb"
+                onerror="this.src='images/placeholder.png';"
+                >
+            </td>
+
             <td>
                 <button class="updateBtn" data-id="${assignment.id}">Edit</button>
                 <button class="deleteBtn" data-id="${assignment.id}">Delete</button>
@@ -139,6 +151,7 @@ function attachButtonHandlers() {
             assignmentName.value = assignment.name;
             dueDate.value = assignment.dueDate;
             document.getElementById("status").value = assignment.status; // < uses getElementById instead of status.value because status is a deprecated reserved word. Wasn't breaking, but wasn't exactly working.
+            imageUrl.value = assignment.imageUrl || "";
 
             editId = id;
             modalOverlay.style.display = "flex";

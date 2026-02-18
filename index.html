@@ -39,6 +39,7 @@
             <th data-sort="name">Assignment Name</th>
             <th data-sort="dueDate">Due Date</th>
             <th data-sort="status">Status</th>
+            <th>Image</th>
             <th>Actions</th> <!-- For Edit/Delete buttons -->
         </tr>
         <tbody id="assignments">
@@ -65,6 +66,9 @@
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
+
+                <label for="imageUrl">Image URL (optional):</label>
+                <input type="text" id="imageUrl" name="imageUrl">
 
                 <div class="modal-actions">
                     <button type="submit">submit</button>
