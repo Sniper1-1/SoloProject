@@ -182,15 +182,22 @@ th[data-sort]:hover {
     background-color: #e0e0e0;
 }
 /* Sort arrows */
+/* Default hollow arrows */
+th[data-sort]::after {
+    content: " ▽△";
+    font-size: 11px;
+}
+/* Active ascending */
 th.sorted-asc::after {
     content: " ▲";
     font-size: 12px;
 }
-
+/* Active descending */
 th.sorted-desc::after {
     content: " ▼";
     font-size: 12px;
 }
+
 
 /* Thumbnail image styles */
 .thumb {
