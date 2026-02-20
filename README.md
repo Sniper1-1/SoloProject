@@ -11,6 +11,6 @@ Tech stack:
 How to deploy/update: Upload the files to the Hostinger server using their file manager or an FTP client under the public_html directory. Update by replacing those files. <br>
 Secrets: Kept in a file not included in the repo (excluded through the .gitignore file). It contains the database host ip, database name, username, and password saved to environment variables that the php code reads when run. <br>
 
-https://github.com/user-attachments/assets/8f8806d9-1b94-4684-abcc-94d176277def
+https://github.com/user-attachments/assets/319e119f-38dc-4f4a-8469-b34e7a0a24be
 
 Credit to w3schools.com and ChatGPT for some help on how to do stuff/formatting and debugging.
