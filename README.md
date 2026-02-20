@@ -1,25 +1,16 @@
-Folder name: SoloProject <br>
-Local URL: http://localhost/SoloProject/ <br>
-Netlify URL: https://jchookecpsc3750soloproject.netlify.app/
+Domain name: https://sniper1-1.com/ <br>
+Registrar: Hostinger <br>
+Hosting provider: Hostinger <br>
 
-Backend language: PHP <br>
-JSON Persistence explanation: Every entry is stored as follows:
-```
-{
-    "course": "course name",
-    "name": "assignment name",
-    "dueDate": "YYYY-MM-DD",
-    "status": "Not Started/In Progress/Completed",
-    "id": unique integer identifier
-}
-```
-The Javascript code is invoked via things like buttons, which then calls the PHP backend to interact with the JSON file for creating a new entry, reading entries, updating entries, and deleting entries. Reloading the page will maintain the data in the table as it is stored in the json file on the server in the backend and not the browser. <br>
+Tech stack:
+* Frontend: HTML, CSS, JavaScript <br>
+* Backend: PHP <br>
+* Database: MySQL <br>
+* Database type: MySQL, hosted on Hostinger <br>
 
+How to deploy/update: Upload the files to the Hostinger server using their file manager or an FTP client under the public_html directory. Update by replacing those files. <br>
+Secrets: Kept in a file not included in the repo (excluded through the .gitignore file). It contains the database host ip, database name, username, and password saved to environment variables that the php code reads when run. <br>
 
-
-https://github.com/user-attachments/assets/63655171-fcd2-4d86-bdd2-0dea757b78d8
-
-
+https://github.com/user-attachments/assets/319e119f-38dc-4f4a-8469-b34e7a0a24be
 
 Credit to w3schools.com and ChatGPT for some help on how to do stuff/formatting and debugging.
-

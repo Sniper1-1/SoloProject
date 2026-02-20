@@ -22,21 +22,49 @@ addTestEntriesBtn.addEventListener("click", function() {
         fillTestData();
     }
 });
-function fillTestData() {
+async function fillTestData() {
     for (let i = 0; i < numberOfTestEntries; i++) {
-        setTimeout(() => { // Use setTimeout to space out the requests because running it async seemed to cause requests to overlap and error
-            const course = departments[Math.floor(Math.random() * departments.length)] + " " + numers[Math.floor(Math.random() * numers.length)];
-            const name = names[Math.floor(Math.random() * names.length)];
-            const dueDate = new Date(Date.now() + Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-            const statusOptions = ["Not Started", "In Progress", "Completed"];
-            const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
-            
-            document.getElementById("course").value = course;
-            document.getElementById("assignmentName").value = name;
-            document.getElementById("dueDate").value = dueDate;
-            document.getElementById("status").value = status;
 
-            form.dispatchEvent(new Event('submit'));
-        }, i * 50); // 50ms interval between requests (i*50 is because without it they all queue and run at 50ms togther)
+        const course = departments[Math.floor(Math.random() * departments.length)] + 
+                       " " + numers[Math.floor(Math.random() * numers.length)];
+
+        const name = names[Math.floor(Math.random() * names.length)];
+
+        const dueDate = new Date(
+            Date.now() + Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000
+        ).toISOString().split('T')[0];
+
+        const statusOptions = ["Not Started", "In Progress", "Completed"];
+        const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+
+        const imageurl = await getRandomImageUrl();
+
+        document.getElementById("course").value = course;
+        document.getElementById("assignmentName").value = name;
+        document.getElementById("dueDate").value = dueDate;
+        document.getElementById("status").value = status;
+        document.getElementById("imageUrl").value = imageurl;
+
+        form.dispatchEvent(new Event('submit'));
+
+        await new Promise(resolve => setTimeout(resolve, 200)); // small delay
+    }
+}
+
+
+function getRandomImageUrl() {
+    //random num between 1 and 2
+    const randomNum = Math.floor(Math.random() * 2) + 1;
+    if (randomNum === 1) { //get url from get request to https://api.thecatapi.com/v1/images/search
+        return fetch("https://api.thecatapi.com/v1/images/search")
+            .then(response => response.json())
+            .then(data => data[0].url)
+            .catch(() => "images/placeholder.png"); // Fallback to placeholder if API call fails
+    }
+    else{ //get url from get request to https://dog.ceo/api/breeds/image/random
+        return fetch("https://dog.ceo/api/breeds/image/random")
+            .then(response => response.json())
+            .then(data => data.message)
+            .catch(() => "images/placeholder.png"); // Fallback to placeholder if API call fails
     }
 }

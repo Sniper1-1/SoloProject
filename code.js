@@ -1,9 +1,17 @@
-const API_BASE = "http://localhost/SoloProject/backend/api.php";
+const API_BASE = "./backend/api.php";
+
 
 /* Paging */
 let currentPage = 1;
-const pageSize = 10;
+let pageSize = parseInt(getCookie("pageSize")) || 10;
+document.getElementById("entriesPerPage").value = pageSize;
 let totalRecords = 0;
+document.getElementById("entriesPerPage").addEventListener("change", (e) => {
+    pageSize = parseInt(e.target.value);
+    setCookie("pageSize", pageSize, 30);
+    loadAssignments(1);
+});
+
 
 /* Button handling */
 const addBtn = document.getElementById("addBtn");
@@ -26,7 +34,10 @@ document.addEventListener("DOMContentLoaded", () => loadAssignments(currentPage)
 
 async function loadAssignments(page = 1) {
     try {
-        const res = await fetch(`${API_BASE}?page=${page}&limit=${pageSize}`);
+        const res = await fetch(
+            `${API_BASE}?page=${page}&limit=${pageSize}&search=${encodeURIComponent(searchTerm)}&sort=${sortField}&direction=${sortDirection}`
+        );
+
         const result = await res.json();
 
         assignments = result.data;
@@ -35,6 +46,7 @@ async function loadAssignments(page = 1) {
 
         renderTable();
         renderPagingControls();
+        updateSortIndicators();
 
     } catch (err) {
         console.error("Failed to load assignments", err);
@@ -50,8 +62,10 @@ form.addEventListener("submit", async function (event) {
         course: document.getElementById("course").value.trim(),
         name: document.getElementById("assignmentName").value.trim(),
         dueDate: document.getElementById("dueDate").value,
-        status: document.getElementById("status").value
+        status: document.getElementById("status").value,
+        imageUrl: document.getElementById("imageUrl").value.trim()
     };
+
 
     try {
         if (editId === null) {
@@ -97,12 +111,23 @@ function renderTable() {
 
     assignments.forEach(assignment => {
         const row = document.createElement("tr");
+        // dueDate is blank if not provided
         row.innerHTML = `
             <td>${assignment.id}</td>
             <td>${assignment.course}</td>
             <td>${assignment.name}</td>
-            <td>${assignment.dueDate}</td>
+            <td>${assignment.dueDate || ""}</td>
             <td>${assignment.status}</td>
+            
+            <td>
+            <img 
+                src="${assignment.imageUrl || 'images/placeholder.png'}"
+                alt="Assignment Image"
+                class="thumb"
+                onerror="this.src='images/placeholder.png';"
+                >
+            </td>
+
             <td>
                 <button class="updateBtn" data-id="${assignment.id}">Edit</button>
                 <button class="deleteBtn" data-id="${assignment.id}">Delete</button>
@@ -126,6 +151,7 @@ function attachButtonHandlers() {
             assignmentName.value = assignment.name;
             dueDate.value = assignment.dueDate;
             document.getElementById("status").value = assignment.status; // < uses getElementById instead of status.value because status is a deprecated reserved word. Wasn't breaking, but wasn't exactly working.
+            imageUrl.value = assignment.imageUrl || "";
 
             editId = id;
             modalOverlay.style.display = "flex";
@@ -218,6 +244,8 @@ const viewToggle = document.getElementById("viewToggle");
 viewToggle.addEventListener("change", () => {
     const statsDiv = document.getElementById("statistics");
     const tableDiv = document.getElementById("assignmentsTable");
+    const controlsDiv = document.querySelector(".controls");
+
 
     if (viewToggle.checked) {
         tableDiv.style.display = "none";
@@ -227,6 +255,7 @@ viewToggle.addEventListener("change", () => {
         purgeBtn.style.display = "none";
         statsDiv.style.display = "block";
         pageHeader.textContent = "Assignment Statistics";
+        controlsDiv.style.display = "none";
         renderStatistics();
     } else {
         statsDiv.style.display = "none";
@@ -236,6 +265,7 @@ viewToggle.addEventListener("change", () => {
         addTestEntriesBtn.style.display = "inline-block";
         purgeBtn.style.display = "inline-block";
         pageHeader.textContent = "Course Assignments List";
+        controlsDiv.style.display = "block";
     }
 });
 
@@ -257,7 +287,65 @@ async function renderStatistics() {
         document.getElementById("notStartedAssignments").textContent =
             `Not Started Assignments: ${stats.notStarted}`;
 
+        document.getElementById("numOfAssignmentsPerPage").textContent =
+            `Number of Assignments Per Page: ${pageSize}`;
+
     } catch (err) {
         console.error("Failed to load statistics", err);
     }
+}
+
+
+// Search functionality
+let searchTerm = "";
+let sortField = "id";
+let sortDirection = "ASC";
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+    searchTerm = searchInput.value.trim();
+    loadAssignments(1); // reset to page 1
+});
+// Sorting functionality
+document.querySelectorAll("th[data-sort]").forEach(th => {
+    th.addEventListener("click", () => {
+        const field = th.dataset.sort;
+
+        if (sortField === field) {
+            sortDirection = sortDirection === "ASC" ? "DESC" : "ASC";
+        } else {
+            sortField = field;
+            sortDirection = "ASC";
+        }
+
+        loadAssignments(1);
+    });
+});
+function updateSortIndicators() {
+    document.querySelectorAll("th[data-sort]").forEach(th => {
+        th.classList.remove("sorted-asc", "sorted-desc");
+    });
+
+    const activeTh = document.querySelector(`th[data-sort="${sortField}"]`);
+    if (activeTh) {
+        activeTh.classList.add(
+            sortDirection === "ASC" ? "sorted-asc" : "sorted-desc"
+        );
+    }
+}
+
+
+
+// Cookies
+function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days*864e5).toUTCString();
+    document.cookie = name + "=" + value + "; expires=" + expires + "; path=/";
+}
+
+function getCookie(name) {
+    return document.cookie.split("; ").reduce((r, v) => {
+        const parts = v.split("=");
+        return parts[0] === name ? parts[1] : r
+    }, "");
 }
