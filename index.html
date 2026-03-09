@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Justin Hooker — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ── Nav ─────────────────────────────────────────────── -->
+  <nav>
+    <span class="nav-logo">Justin Hooker</span>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="https://www.linkedin.com/in/justin-hooker-422141274" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://github.com/Sniper1-1" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <main class="wrapper">
+
+    <!-- ══════════════════════════════════════════════════════
+         HERO — all three CHECK 1 elements must be visible
+         here WITHOUT scrolling
+         ══════════════════════════════════════════════════════ -->
+    <section class="hero">
+
+      <!-- CHECK 1 REQUIREMENT #1: Your name — big and obvious -->
+      <h1 class="hero-name">Justin Hooker</h1>
+
+      <!--
+        CHECK 1 REQUIREMENT #2: Your role.
+        Must sound like a job title. Be specific about your stack.
+        BAD:  "Passionate problem solver"
+        GOOD: "Full-Stack Developer | React, Node.js & PostgreSQL"
+      -->
+      <p class="hero-role">Full-Stack Developer | HTML/CSS, JavaScript, PHP, Next.js</p>
+
+      <!--
+        CHECK 1 REQUIREMENT #3: Your best project, visible without scrolling.
+        Feature whichever is stronger: solo app OR team project Phase 3.
+      -->
+      <div class="featured-project">
+        <p class="label">Featured Project</p>
+        <h2 class="project-name">AssignmentsManager</h2>
+        <!--
+          One sentence using the 3-part formula:
+          [What it does] + [why it's interesting] + [one architecture decision]
+          e.g. "A real-time task manager that resolves concurrent edits using
+          event-sourcing, built with WebSockets and React."
+        -->
+        <p class="project-desc">
+          A project for keeping track of class assignments and their due dates, built with HTML/CSS, JavaScript, and PHP with a MySQL database storing the data.
+        </p>
+        <div class="project-links">
+          <!-- PRIMARY CTA — most important link on the page -->
+          <a href="./AssignmentsManager/" class="btn-primary" target="_blank" rel="noopener">Live App ↗</a>
+          <a href="https://github.com/Sniper1-1/SoloProject" class="btn-ghost" target="_blank" rel="noopener">View Code</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         BELOW THE FOLD — recruiters who scroll will see this
+         ══════════════════════════════════════════════════════ -->
+
+    <!-- ── All Projects ──────────────────────────────────── -->
+    <section id="projects">
+      <h2 class="section-title">Projects</h2>
+
+      <div class="projects-grid">
+
+        <!-- Solo App -->
+        <article class="project-card">
+          <p class="label">Solo App</p>
+          <h3 class="card-name">Solo App Name</h3>
+          <!--
+            3-sentence formula:
+            1. What it does (user value)
+            2. Why it's technically interesting
+            3. Key architecture decision
+          -->
+          <p class="card-desc">
+            What it does for users. Why it's technically interesting. One architecture decision you made.
+          </p>
+          <div class="card-links">
+            <a href="https://your-solo-app-url.com" target="_blank" rel="noopener">Live App ↗</a>
+            <a href="https://github.com/yourusername/solo-repo" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <!--
+          Team Project — link to a dedicated page that shows all 3 phases.
+          Each phase must have its own separately deployed URL.
+        -->
+        <article class="project-card">
+          <p class="label">Team Project</p>
+          <h3 class="card-name">Team Project Name</h3>
+          <p class="card-desc">
+            What the final product does. What makes it interesting. Your specific contribution to the team.
+          </p>
+          <div class="card-links">
+            <a href="/team-project.html">All 3 Phases ↗</a>
+            <a href="https://github.com/yourusername/team-repo" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ── About ─────────────────────────────────────────── -->
+    <section id="about">
+      <h2 class="section-title">About</h2>
+      <!--
+        Keep this short — 2-3 sentences.
+        Focus on what you can DO, not your learning journey.
+        BAD:  "I'm a passionate learner who loves to explore new technologies."
+        GOOD: "CS student at [School] focused on full-stack web apps.
+               Looking for a [role] where I can [value you bring]."
+      -->
+      <p class="about-text">
+        CS student at [Your School] focused on full-stack development.
+        I build [type of things] and I'm currently looking for [internship / new grad role] in [location or remote].
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ──────────────────────────────────────────── -->
+  <footer>
+    <span>© 2025 Your Name</span>
+    <div class="footer-links">
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:you@email.com">Email</a>
+    </div>
+  </footer>
+
+</body>
+</html>
