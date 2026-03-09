@@ -89,6 +89,19 @@ nav {
   padding: var(--space-md);
 }
 
+/* ─── Custom element display fix ────────────────────────── */
+/* Browsers treat unknown elements (like <project-card>) as inline by default,
+   which breaks border, padding, and layout. These rules make both card styles
+   behave like block/flex containers as intended. */
+project-card {
+  display: block;
+}
+
+project-card.project-card {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Reusable small label above project names */
 .label {
   font-size: 0.75rem;
