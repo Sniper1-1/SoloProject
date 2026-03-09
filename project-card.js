@@ -31,11 +31,12 @@ const PROJECTS = {
     repo:  'https://github.com/Sniper1-1/SoloProject',
   },
   'team-project': {
-    name:  'Team Project Name',
+    name:  'Battleship Game',
     label: 'Team Project',
-    desc:  'What the final product does. What makes it interesting. Your specific contribution to the team.',
-    live:  '/team-project.html',
-    repo:  'https://github.com/yourusername/team-repo',
+    desc:  'A web-based multiplayer battleship game. Contributed the PHP backend API endpoints.',
+    live:  'https://projectwarship.netlify.app/',
+    repo:  'https://github.com/SStamper-Dev/warship',
+    repo2: 'https://github.com/SStamper-Dev/capstone3750',
   },
   // ── Add more projects here as you build them ──────────────────────────────
   // 'my-next-project': {
@@ -60,7 +61,7 @@ class ProjectCard extends HTMLElement {
       return;
     }
 
-    const { name, label, desc, live, repo } = project;
+    const { name, label, desc, live, repo, repo2 } = project;
 
     // "featured" is a boolean attribute — its presence (not value) determines the style
     const featured = this.hasAttribute('featured');
@@ -75,6 +76,7 @@ class ProjectCard extends HTMLElement {
         <div class="project-links">
           <a href="${live}" class="btn-primary" target="_blank" rel="noopener">Live App ↗</a>
           <a href="${repo}" class="btn-ghost"   target="_blank" rel="noopener">View Code</a>
+          ${repo2 ? `<a href="${repo2}" class="btn-ghost" target="_blank" rel="noopener">Backend Code</a>` : ''}
         </div>
       `;
     } else {
@@ -87,6 +89,7 @@ class ProjectCard extends HTMLElement {
         <div class="card-links">
           <a href="${live}" target="_blank" rel="noopener">Live App ↗</a>
           <a href="${repo}" target="_blank" rel="noopener">GitHub</a>
+          ${repo2 ? `<a href="${repo2}" target="_blank" rel="noopener">Backend</a>` : ''}
         </div>
       `;
     }
