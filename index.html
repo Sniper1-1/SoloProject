@@ -1,114 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solo Project</title>
-    <link rel="stylesheet" href="formattings.css">
-    <link rel="stylesheet" href="debug/debug.css">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Justin Hooker — Portfolio</title>
+	<link rel="stylesheet" href="style.css" />
+	<!-- site-config must load before project-card so SITE is defined when cards render -->
+	<script src="reusable_modules/site-config.js" defer></script>
+	<script src="reusable_modules/project-card.js" defer></script>
 </head>
+
 <body>
-    <!-- Your visible content goes here -->
-    <h1 id="pageHeader">Course Assignments List</h1>
 
-    <!-- Toggle switch for viewing assignments vs statistics -->
-    <div class="toggle-container">
-        <span class="toggle-label left">View Assignments</span>
+	<!-- ── Nav ─────────────────────────────────────────────── -->
+	<nav>
+		<!-- data-site="name" → filled from SITE.name in site-config.js -->
+		<span class="nav-logo" data-site="name"></span>
+		<ul class="nav-links">
+			<li><a href="#projects">Projects</a></li>
+			<li><a href="#about">About</a></li>
+			<!-- data-site="linkedin/github" → href filled from SITE in site-config.js -->
+			<li><a data-site="linkedin" target="_blank" rel="noopener">LinkedIn</a></li>
+			<li><a data-site="github"   target="_blank" rel="noopener">GitHub</a></li>
+		</ul>
+	</nav>
 
-        <input type="checkbox" id="viewToggle">
-        <label for="viewToggle" class="toggle"></label>
+	<main class="wrapper">
 
-        <span class="toggle-label right">View Statistics</span>
-    </div>
+		<!-- ══════════════════════════════════════════════════════
+		     HERO — all three CHECK 1 elements must be visible
+		     here WITHOUT scrolling
+		     ══════════════════════════════════════════════════════ -->
+		<section class="hero">
 
-    <!-- Search input for filtering assignments -->
-    <div class="controls">
-        <input type="text" id="searchInput" placeholder="Search by course or assignment name">
-        <label>
-            Entries per page:
-            <input type="number" id="entriesPerPage" value="10" min="1">
-        </label>
-    </div>
+			<!-- CHECK 1 REQUIREMENT #1: Your name — big and obvious -->
+			<h1 class="hero-name" data-site="name"></h1>
 
+			<!-- CHECK 1 REQUIREMENT #2: Your role — reads like a job title -->
+			<p class="hero-role" data-site="role"></p>
 
+			<!--
+			CHECK 1 REQUIREMENT #3: Featured project card.
+			Data comes from the PROJECTS registry in project-card.js.
+			"featured" switches to the hero card style.
+			To feature a different project, change the id here.
+			-->
+			<h4 class="featured-title">Featured Project</h4>
+			<project-card id="assignments-manager" featured></project-card>
 
-    <table id="assignmentsTable">
-        <tr> <!-- Table Headers -->
-            <th data-sort="id">ID Number</th>
-            <th data-sort="course">Course</th>
-            <th data-sort="name">Assignment Name</th>
-            <th data-sort="dueDate">Due Date</th>
-            <th data-sort="status">Status</th>
-            <th>Image</th>
-            <th>Actions</th> <!-- For Edit/Delete buttons -->
-        </tr>
-        <tbody id="assignments">
-            <!-- Table rows will be dynamically added here -->
-        </tbody>
-    </table>
-    
-    <!-- Form for adding new assignments -->
-     <div id="modalOverlay">
-        <div class="modal">
-            <form id="assignmentForm">
-                <label for="course">Course:</label>
-                <input type="text" id="course" name="course" required>
+		</section>
 
-                <label for="assignmentName">Assignment Name:</label>
-                <input type="text" id="assignmentName" name="assignmentName" required>
+		<!-- ══════════════════════════════════════════════════════
+		     BELOW THE FOLD — recruiters who scroll will see this
+		     ══════════════════════════════════════════════════════ -->
 
-                <label for="dueDate">Due Date:</label>
-                <input type="date" id="dueDate" name="dueDate">
+		<!-- ── All Projects ──────────────────────────────────── -->
+		<section id="projects">
+			<h2 class="section-title">Projects</h2>
 
-                <label for="status">Status:</label>
-                <select id="status" name="status" required>
-                    <option value="Not Started">Not Started</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Completed">Completed</option>
-                </select>
+			<div class="projects-grid">
 
-                <label for="imageUrl">Image URL (optional):</label>
-                <input type="text" id="imageUrl" name="imageUrl">
+				<!--
+				Same id, no "featured" attribute = regular card style.
+				All data comes from project-card.js — edit it there,
+				and both this card and the featured card above update.
+				-->
+				<project-card id="assignments-manager"></project-card>
 
-                <div class="modal-actions">
-                    <button type="submit">submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
+				<!-- Team project card — add its data to PROJECTS in project-card.js -->
+				<project-card id="team-project"></project-card>
 
-    <button id="addBtn" type="button">Add New Assignment</button>
+			</div>
+		</section>
 
-    <!-- Controls for navigating the table pages -->
-    <div id="paging" class="paging">
-        <button id="firstPage" aria-label="First page">&lt;&lt;</button>
-        <button id="prevPage" aria-label="Previous page">&lt;</button>
+		<!-- ── About ─────────────────────────────────────────── -->
+		<section id="about">
+			<h2 class="section-title">About</h2>
+			<!--
+			Keep this short — 2-3 sentences.
+			Focus on what you can DO, not your learning journey.
+			BAD:  "I'm a passionate learner who loves to explore new technologies."
+			GOOD: "CS student at [School] focused on full-stack web apps.
+			       Looking for a [role] where I can [value you bring]."
+			-->
+			<p class="about-text">
+				CS student at Clemson University focused on full-stack development, cybersecurity, and artificial intelligence.
+			</p>
+		</section>
 
-        <label class="page-label">
-            Page
-            <input type="number" id="pageInput" min="1">
-            <span id="pageTotal"></span>
-        </label>
+	</main>
 
-        <button id="nextPage" aria-label="Next page">&gt;</button>
-        <button id="lastPage" aria-label="Last page">&gt;&gt;</button>
-    </div>
+	<!-- ── Footer ──────────────────────────────────────────── -->
+	<footer>
+		<!-- data-site="year" → filled from SITE.year in site-config.js -->
+		<span>© <span data-site="year"></span> <span data-site="name"></span></span>
+		<div class="footer-links">
+			<a data-site="github"   target="_blank" rel="noopener">GitHub</a>
+			<a data-site="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+		</div>
+	</footer>
 
-
-
-    <!-- The statistics for when statistic view is active -->
-    <div id="statistics" style="display:none;">
-        <p id="totalAssignments">Total Assignments: 0</p>
-        <p id="completedAssignments">Completed Assignments: 0</p>
-        <p id="inProgressAssignments">In Progress Assignments: 0</p>
-        <p id="notStartedAssignments">Not Started Assignments: 0</p>
-        <p id="numOfAssignmentsPerPage">Number of Assignments Per Page: 0</p>
-    </div>
-
-    <button id="purgeBtn" type="button">⚠️Purge⚠️</button>
-    <button id="addTestEntriesBtn" type="button">Add Test Entries</button>
-    
-    <script src="code.js"></script>
-    <script src="debug/debug.js"></script>
 </body>
+
 </html>
