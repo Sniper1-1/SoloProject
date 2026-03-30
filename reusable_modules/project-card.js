@@ -34,7 +34,7 @@ const PROJECTS = {
     name:  'Battleship Game',
     label: 'Team Project',
     desc:  'A web-based multiplayer battleship game. Contributed the PHP backend API endpoints.',
-    live:  'https://projectwarship.netlify.app/',
+    live:  'https://sniper1-1.com/battleship/',
     repo:  'https://github.com/SStamper-Dev/warship',
     repo2: 'https://github.com/SStamper-Dev/capstone3750',
   },
